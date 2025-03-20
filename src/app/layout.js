@@ -1,4 +1,5 @@
 import "./globals.css";
+import LayoutContent from "./layoutContent";
 
 export const metadata = {
   title: "Create Next App",
@@ -9,7 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <LayoutContent>
+          {children}
+        </LayoutContent>
       </body>
     </html>
   );
