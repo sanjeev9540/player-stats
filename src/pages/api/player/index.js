@@ -1,0 +1,1 @@
+const clientPromise from '@/lib/mongodb.js';

@@ -2,7 +2,8 @@ import Image from "next/image";
 
 import BackgroundImage from '@/../public/bgVs.jpg';
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <div>
       <Image className="blur-[1px] w-full h-screen absolute" src={BackgroundImage} alt="background image" width={1280} height={768} />
