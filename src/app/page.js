@@ -9,20 +9,33 @@ import AddDetailsModal from "./component/modal";
 import MatchModalContent from "./component/matchModalContent";
 import PlayerModalContent from "./component/playerModalContent";
 import PlayerStatsModal from "./component/playerStatsModal";
+import { useLazyGetMatchQuery, useCreateMatchMutation, useCreatePlayerMutation, useCreatePlayerStatsMutation } from "@/store/slices/statsApi";
 
 export default function Home() {
   const [entryType, setEntryType] = useState('match_entry');
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [details, setDetails] = useState({});
+  const [createMatch, matchResult] = useCreateMatchMutation();
+  const [createPlayer, playerResult] = useCreatePlayerMutation();
+  const [createPlayerStats, playerStatsResult] = useCreatePlayerStatsMutation();
+
+  const modalTypeApi = {
+    'match_entry': createMatch,
+    'player_entry': createPlayer,
+    'player_stats_entry': createPlayerStats
+  }
 
   const handleDetails = (name, value) => {
     setDetails({...details, [name]:value});
   }
 
-  console.log('sdkfjasjf', details);
-
   const clearDetails = () => {
     setDetails({});
+  }
+
+  const createEntry = () => {
+    const api = modalTypeApi[entryType];
+    api(details);
   }
 
   return (
@@ -59,17 +72,17 @@ export default function Home() {
         <AddDetailsModal open={isOpenModal} handleClose={setIsOpenModal}>
           {
             entryType === 'match_entry' &&
-            <MatchModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails}/>
+            <MatchModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry}/>
           }
 
           {
             entryType === 'player_entry' &&
-            <PlayerModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails}/>
+            <PlayerModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry}/>
           }
 
           {
             entryType === 'player_stats_entry' &&
-            <PlayerStatsModal details={details} handleClose={setIsOpenModal} handleDetails={handleDetails}/>
+            <PlayerStatsModal details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry}/>
           }
         </AddDetailsModal>
 

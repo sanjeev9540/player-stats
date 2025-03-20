@@ -5,7 +5,7 @@ import { Grid } from '@mui/system';
 import { TextField } from '@mui/material';
 import { ButtonContainer, CancelButton, MainButton } from './buttonStyled';
 
-const PlayerStatsModal = ({details, handleDetails, handleClose}) => {
+const PlayerStatsModal = ({details, handleDetails, handleClose, createEntry}) => {
     return (
         <>
             <Typography variant='h4' className='modal--heading'>Create Player Stats</Typography>
@@ -98,7 +98,7 @@ const PlayerStatsModal = ({details, handleDetails, handleClose}) => {
             </Grid>
             <ButtonContainer>
                 <CancelButton onClick={() => handleClose(false)}>Cancel</CancelButton>
-                <MainButton>Create</MainButton>
+                <MainButton onClick={createEntry}>Create</MainButton>
             </ButtonContainer>
         </>
     )

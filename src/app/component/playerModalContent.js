@@ -5,7 +5,7 @@ import { Grid } from '@mui/system';
 import { TextField } from '@mui/material';
 import { ButtonContainer, CancelButton, MainButton } from './buttonStyled';
 
-const PlayerModalContent = ({details, handleDetails, handleClose}) => {
+const PlayerModalContent = ({details, handleDetails, handleClose, createEntry}) => {
     return (
         <>
             <Typography variant='h4' className='modal--heading'>Create New Player</Typography>
@@ -30,12 +30,12 @@ const PlayerModalContent = ({details, handleDetails, handleClose}) => {
                     <Typography variant='label'>Team:</Typography>
                 </Grid>
                 <Grid size={8}>
-                    <TextField value={details.teams ?? ''} onChange={(e) => handleDetails('teams', e.target.value)} id="outlined-basic" label="Team" variant="outlined" sx={{ width: '100%' }} />
+                    <TextField value={details.team ?? ''} onChange={(e) => handleDetails('team', e.target.value)} id="outlined-basic" label="Team" variant="outlined" sx={{ width: '100%' }} />
                 </Grid>
             </Grid>
             <ButtonContainer>
                 <CancelButton onClick={() => handleClose(false)}>Cancel</CancelButton>
-                <MainButton>Create</MainButton>
+                <MainButton onClick={createEntry}>Create</MainButton>
             </ButtonContainer>
         </>
     )

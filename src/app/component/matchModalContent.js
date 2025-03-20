@@ -1,4 +1,5 @@
 'use client';
+import { useEffect } from 'react';
 
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/system';
@@ -8,9 +9,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
 import { ButtonContainer, CancelButton, MainButton } from './buttonStyled';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
 
-const MatchModalContent = ({details, handleClose, handleDetails}) => {
+const MatchModalContent = ({details, handleClose, handleDetails, createEntry}) => {
     useEffect(() => {
         handleDetails('date', dayjs(new Date()));
     }, []);
@@ -45,7 +45,7 @@ const MatchModalContent = ({details, handleClose, handleDetails}) => {
             </Grid>
             <ButtonContainer>
                 <CancelButton onClick={() => handleClose(false)}>Cancel</CancelButton>
-                <MainButton>Create</MainButton>
+                <MainButton onClick={createEntry}>Create</MainButton>
             </ButtonContainer>
         </>
     )
