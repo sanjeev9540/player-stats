@@ -7,11 +7,11 @@ export default async function handler(req, res) {
         const matchCollection = db.collection('match');
         if (req.method === 'GET') {
             const match = await matchCollection.find({}).toArray();
-            return res.status(200).json({data: match});
+            return res.status(200).json(match);
         } else if (req.method === 'POST') {
             const { date, teams, venue } = req.body;
-            const result = await matchCollection.insertOne({ _id: date, teams, venue, createdAt: new Date() });
-            return res.status(200).json({ message: 'Match Added', matchId: result.intersetedId });
+            await matchCollection.insertOne({ _id: date, teams, venue, createdAt: new Date() });
+            return res.status(200).json({ message: 'Match Added' });
         }
     } catch (error) {
         console.log('Database connection error', error);

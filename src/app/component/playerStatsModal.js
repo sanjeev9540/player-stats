@@ -2,10 +2,17 @@
 
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/system';
-import { TextField } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import { ButtonContainer, CancelButton, MainButton } from './buttonStyled';
+import { useGetMatchQuery, useGetPlayerQuery } from '@/store/slices/statsApi';
+import { SelectContainer } from './modalStyled';
+import { useState } from 'react';
+import dayjs from 'dayjs';
 
-const PlayerStatsModal = ({details, handleDetails, handleClose, createEntry}) => {
+const PlayerStatsModal = ({ details, handleDetails, handleClose, createEntry }) => {
+    const { data: matches } = useGetMatchQuery();
+    const { data: players } = useGetPlayerQuery();
+
     return (
         <>
             <Typography variant='h4' className='modal--heading'>Create Player Stats</Typography>
@@ -14,7 +21,16 @@ const PlayerStatsModal = ({details, handleDetails, handleClose, createEntry}) =>
                     <Typography variant='label'>Player Id:</Typography>
                 </Grid>
                 <Grid size={8}>
-                    <TextField value={details.player_id ?? ''} onChange={(e) => handleDetails('player_id', e.target.value)} id="outlined-basic" label="Player Id" variant="outlined" sx={{ width: '100%' }} />
+                    <SelectContainer
+                        value={details.player_id ?? ''}
+                        onChange={(e) => handleDetails('player_id', e.target.value)}
+                    >
+                        {
+                            players && players.map(player => {
+                                return <MenuItem value={player._id}>{player.name}</MenuItem>
+                            })
+                        }
+                    </SelectContainer>
                 </Grid>
             </Grid>
             <Grid container sx={{ alignItems: "center", marginTop: '24px' }}>
@@ -22,7 +38,16 @@ const PlayerStatsModal = ({details, handleDetails, handleClose, createEntry}) =>
                     <Typography variant='label'>Match Id:</Typography>
                 </Grid>
                 <Grid size={8}>
-                    <TextField value={details.match_id ?? ''} onChange={(e) => handleDetails('match_id', e.target.value)} id="outlined-basic" label="Match Id" variant="outlined" sx={{ width: '100%' }} />
+                    <SelectContainer
+                        value={details.match_id ?? ''}
+                        onChange={(e) => handleDetails('match_id', e.target.value)}
+                    >
+                        {
+                            matches && matches.map(match => {
+                                return <MenuItem value={match._id}>{dayjs(match._id).format('DD-MM-YYYY')}</MenuItem>
+                            })
+                        }
+                    </SelectContainer>
                 </Grid>
             </Grid>
             <Grid container sx={{ alignItems: "center", marginTop: '24px' }}>

@@ -1,4 +1,5 @@
-import { Box, fontSize, fontWeight, styled, textAlign } from "@mui/system";
+import { Select } from "@mui/material";
+import { Box, fontSize, fontWeight, padding, styled, textAlign } from "@mui/system";
 
 export const ModalContainer = styled(Box)(() => ({
     width: '600px',
@@ -20,5 +21,15 @@ export const ModalContainer = styled(Box)(() => ({
         fontWeight: 700,
         textAlign: 'center',
         marginBottom: '24px',
+    }
+}));
+
+export const SelectContainer = styled(Select)(() => ({
+    padding: '16px',
+    borderRadius: '5px',
+    width: '100%',
+
+    '& .MuiSelect-select': {
+        padding: 'unset',
     }
 }));

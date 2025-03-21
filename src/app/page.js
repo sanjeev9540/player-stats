@@ -26,17 +26,19 @@ export default function Home() {
   }
 
   const handleDetails = (name, value) => {
-    setDetails({...details, [name]:value});
+    setDetails({ ...details, [name]: value });
   }
 
   const clearDetails = () => {
     setDetails({});
   }
 
-  const createEntry = () => {
+  const createEntry = async () => {
     const api = modalTypeApi[entryType];
-    api(details);
+    await api(details);
+    clearDetails();
   }
+
 
   return (
     <div style={{ position: 'relative' }}>
@@ -72,17 +74,17 @@ export default function Home() {
         <AddDetailsModal open={isOpenModal} handleClose={setIsOpenModal}>
           {
             entryType === 'match_entry' &&
-            <MatchModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry}/>
+            <MatchModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry} />
           }
 
           {
             entryType === 'player_entry' &&
-            <PlayerModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry}/>
+            <PlayerModalContent details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry} />
           }
 
           {
             entryType === 'player_stats_entry' &&
-            <PlayerStatsModal details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry}/>
+            <PlayerStatsModal details={details} handleClose={setIsOpenModal} handleDetails={handleDetails} createEntry={createEntry} />
           }
         </AddDetailsModal>
 

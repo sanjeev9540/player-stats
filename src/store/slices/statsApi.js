@@ -2,11 +2,18 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const statsApi = createApi({
     reducerPath: 'statsApi',
-    baseQuery: fetchBaseQuery({baseUrl: '/'}),
+    keepUnusedDataFor: 30,
+    baseQuery: fetchBaseQuery({ baseUrl: '/' }),
     endpoints: (builder) => ({
         getMatch: builder.query({
             query: () => ({
                 url: '/api/match',
+                method: 'GET',
+            })
+        }),
+        getPlayer: builder.query({
+            query: () => ({
+                url: '/api/player',
                 method: 'GET',
             })
         }),
@@ -34,4 +41,4 @@ export const statsApi = createApi({
     })
 })
 
-export const {useLazyGetMatchQuery, useCreateMatchMutation, useCreatePlayerMutation, useCreatePlayerStatsMutation} = statsApi;
+export const { useGetMatchQuery, useGetPlayerQuery, useCreateMatchMutation, useCreatePlayerMutation, useCreatePlayerStatsMutation } = statsApi;
