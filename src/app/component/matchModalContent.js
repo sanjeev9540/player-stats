@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/system';
-import { LocalizationProvider } from '@mui/x-date-pickers';
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
@@ -23,7 +23,7 @@ const MatchModalContent = ({details, handleClose, handleDetails, createEntry}) =
                 </Grid>
                 <Grid size={8}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker value={details.date ?? dayjs(new Date())} onChange={(value) => handleDetails('date', value)} sx={{ width: '100%' }} />
+                        <DateTimePicker value={details.date ?? dayjs(new Date())} onChange={(value) => handleDetails('date', value)} sx={{ width: '100%' }} />
                     </LocalizationProvider>
                 </Grid>
             </Grid>

@@ -10,7 +10,8 @@ export default async function handler(req, res) {
             return res.status(200).json(match);
         } else if (req.method === 'POST') {
             const { date, teams, venue } = req.body;
-            await matchCollection.insertOne({ _id: date, teams, venue, createdAt: new Date() });
+            const teamArr = teams.split(',');
+            await matchCollection.insertOne({ _id: date, teams: teamArr, venue, createdAt: new Date() });
             return res.status(200).json({ message: 'Match Added' });
         }
     } catch (error) {

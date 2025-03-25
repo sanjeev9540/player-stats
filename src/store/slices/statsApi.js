@@ -33,7 +33,7 @@ export const statsApi = createApi({
         }),
         createPlayerStats: builder.mutation({
             query: (payload) => ({
-                url: '/api/playerStats',
+                url: '/api/player-stats',
                 method: 'POST',
                 body: payload
             })

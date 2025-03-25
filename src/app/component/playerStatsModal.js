@@ -6,12 +6,21 @@ import { MenuItem, TextField } from '@mui/material';
 import { ButtonContainer, CancelButton, MainButton } from './buttonStyled';
 import { useGetMatchQuery, useGetPlayerQuery } from '@/store/slices/statsApi';
 import { SelectContainer } from './modalStyled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
 const PlayerStatsModal = ({ details, handleDetails, handleClose, createEntry }) => {
     const { data: matches } = useGetMatchQuery();
     const { data: players } = useGetPlayerQuery();
+    const [team, setTeam] = useState('RCB');
+    const playerData = {};
+
+    players && players.map(item => {
+        if(!playerData[item.team]){
+            playerData[item.team] = [];
+        }
+        playerData[item.team].push({name: item.name, id: item._id});
+    })
 
     return (
         <>
@@ -20,14 +29,26 @@ const PlayerStatsModal = ({ details, handleDetails, handleClose, createEntry }) 
                 <Grid size={4}>
                     <Typography variant='label'>Player Id:</Typography>
                 </Grid>
-                <Grid size={8}>
+                <Grid size={2}>
+                    <SelectContainer
+                        value={team ?? ''}
+                        onChange={(e) => setTeam(e.target.value)}
+                    >
+                        {
+                            playerData && Object.keys(playerData).map(team => {
+                                return <MenuItem value={team}>{team}</MenuItem>
+                            })
+                        }
+                    </SelectContainer>
+                </Grid>
+                <Grid size={6}>
                     <SelectContainer
                         value={details.player_id ?? ''}
                         onChange={(e) => handleDetails('player_id', e.target.value)}
                     >
                         {
-                            players && players.map(player => {
-                                return <MenuItem value={player._id}>{player.name}</MenuItem>
+                            playerData[team] && playerData[team].map(player => {
+                                return <MenuItem value={player.id}>{player.name}</MenuItem>
                             })
                         }
                     </SelectContainer>
@@ -44,7 +65,7 @@ const PlayerStatsModal = ({ details, handleDetails, handleClose, createEntry }) 
                     >
                         {
                             matches && matches.map(match => {
-                                return <MenuItem value={match._id}>{dayjs(match._id).format('DD-MM-YYYY')}</MenuItem>
+                                return <MenuItem value={match._id}>{dayjs(match._id).format('DD-MM-YYYY hh-mm A')}</MenuItem>
                             })
                         }
                     </SelectContainer>
@@ -55,7 +76,16 @@ const PlayerStatsModal = ({ details, handleDetails, handleClose, createEntry }) 
                     <Typography variant='label'>Team:</Typography>
                 </Grid>
                 <Grid size={8}>
-                    <TextField value={details.teams ?? ''} onChange={(e) => handleDetails('teams', e.target.value)} id="outlined-basic" label="Team" variant="outlined" sx={{ width: '100%' }} />
+                <SelectContainer
+                        value={details.team ?? ''}
+                        onChange={(e) => handleDetails('team', e.target.value)}
+                    >
+                        {
+                             playerData && Object.keys(playerData).map(teamName => {
+                                return <MenuItem value={teamName}>{teamName}</MenuItem>
+                            })
+                        }
+                    </SelectContainer>
                 </Grid>
             </Grid>
 
@@ -64,7 +94,16 @@ const PlayerStatsModal = ({ details, handleDetails, handleClose, createEntry }) 
                     <Typography variant='label'>Role:</Typography>
                 </Grid>
                 <Grid size={8}>
-                    <TextField value={details.role ?? ''} onChange={(e) => handleDetails('role', e.target.value)} id="outlined-basic" label="Role" variant="outlined" sx={{ width: '100%' }} />
+                <SelectContainer
+                        value={details.role ?? ''}
+                        onChange={(e) => handleDetails('role', e.target.value)}
+                    >
+                        {
+                            ['Batsman', 'Wicket Keeper', 'All-Rounder', 'Bowler'].map(playerRole => {
+                                return <MenuItem value={playerRole}>{playerRole}</MenuItem>
+                            })
+                        }
+                    </SelectContainer>
                 </Grid>
             </Grid>
 

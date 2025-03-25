@@ -10,6 +10,7 @@ import MatchModalContent from "./component/matchModalContent";
 import PlayerModalContent from "./component/playerModalContent";
 import PlayerStatsModal from "./component/playerStatsModal";
 import { useLazyGetMatchQuery, useCreateMatchMutation, useCreatePlayerMutation, useCreatePlayerStatsMutation } from "@/store/slices/statsApi";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 export default function Home() {
   const [entryType, setEntryType] = useState('match_entry');
@@ -69,6 +70,33 @@ export default function Home() {
           </form>
 
         </div>
+
+        <TableContainer sx={{marginTop: '30px'}} component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow sx={{marginBottom: '5px'}}>
+                <TableCell sx={{fontSize: '18px', fontWeight: '600'}}>Dessert (100g serving)</TableCell>
+                <TableCell align="center" sx={{fontSize: '18px', fontWeight: '600'}}>Calories</TableCell>
+                <TableCell align="center" sx={{fontSize: '18px', fontWeight: '600'}}>Fat</TableCell>
+                <TableCell align="center" sx={{fontSize: '18px', fontWeight: '600'}}>Carbs</TableCell>
+                <TableCell align="center" sx={{fontSize: '18px', fontWeight: '600'}}>Protein</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  row name
+                </TableCell>
+                <TableCell align="center">Calories</TableCell>
+                <TableCell align="center">fat</TableCell>
+                <TableCell align="center">carbs</TableCell>
+                <TableCell align="center">protiens</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
 
 
         <AddDetailsModal open={isOpenModal} handleClose={setIsOpenModal}>
